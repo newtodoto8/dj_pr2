@@ -32,6 +32,13 @@ public:
 		c=c;
 
 	}
+
+	std::ostream& operator<<(std::ostream& os,const cube& cube_var)
+	{
+		
+			cout<<len<<endl;
+		
+	}
 private:
 	int len;
 	color c;
@@ -58,5 +65,11 @@ public:
 
 	void solve();
 
-
+	std::ostream& operator<<(std::ostream& os,const Hanoi& hanoi)
+	{
+		for (auto& iter_var : stacks_)
+		{
+			cout<<iter_var<<endl;
+		}
+	}
 }
