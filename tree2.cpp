@@ -27,10 +27,64 @@ public:
     BST();
     void insert(int k);
     void inorder(node *root);
+    node* successor(node * root);
+    bool nochild(node *root);
+    node* predecessor(node * root);
+    node* search
+
 };
 
+bool BST::nochild(node *root)
+{
+    if (root->l_child==NULL && root->r_child==NULL)
+    {
+        return true;
+    }
+    else return false;
+}
 
+node* BST::predecessor(node *root)
+{
+    int val=root->key;
+    node *x=root;
+    if (x!=NULL)
+    {
+        x=x->l_child;
+    }
+    while(x->r_child!=NULL)
+    {
+        x=x->r_child;
+    }
+    return x;
+}
 
+node* BST::successor(node *root)
+{
+    int val=root->key;
+    node *x=root;
+    if (x!=NULL)
+    {
+        x=x->r_child;
+    }
+
+    while (x->l_child!=NULL)
+    {
+        x=x->l_child;
+    }
+    // while (!nochild(x))
+    // {
+    //     if (x->l_child!=NULL)
+    //     {
+    //         x=x->l_child;
+    //     }
+    //     else
+    //     {
+    //         x=x->r_child;
+    //     }
+    // }
+    return x;
+
+}
 
 void BST::insert(int k)
 {
@@ -46,7 +100,7 @@ void BST::insert(int k)
     }
     else
     {
-        cout<<"here"<<endl;
+        // cout<<"here"<<endl;
         node *r=new node;
         r=root;
         node *y =r;
@@ -106,8 +160,14 @@ int main()
     a.insert(114);
     a.insert(4);
     a.insert(134);
+    a.insert(104);
+    a.insert(109);
+    a.insert(113);
+    a.insert(54);
     a.insert(41);
     a.inorder(a.root);
+    cout<<a.successor(a.root)->key<<endl;
+    cout<<a.predecessor(a.root)->key;
 
 }
 
