@@ -23,9 +23,9 @@ public:
         if (l_child==NULL && r_child==NULL)
             return 0;
         else if (l_child!=NULL && r_child==NULL)
-            return this->height-l_child->height;
+            return (-1)*l_child->height;
         else if (l_child==NULL && r_child!=NULL)
-            return r_child->height-this->height;
+            return r_child->height;
         else
             return r_child->height-l_child->height;
 
@@ -44,42 +44,142 @@ public:
         root=NULL;
         // cout<<"called const";
     }
+    int max_height(node* a, node* b)
+    {
+        if (a==NULL && b==NULL)
+            {return max(0,0);}
+        else if (a==NULL && b!=NULL)
+            {return max(0,b->height);}
+        else if (a!=NULL && b==NULL)
+            {return max(0,a->height);}
+        else
+            {return max(a->height,b->height);}
+    }
     void _update_height(node* x)
     {
-        
-        //extra cautious not necessary x=x->parent is also fine
-        if(x->parent==x->parent->l_child)
+        if (x==NULL)
         {
-           
-            if (x->parent->r_child->height>=x->parent->height+1)
-            {
-                return;
-            }
-            else
-            {
-                x->height+=1;
-                x=x->parent;
-                _update_height(x);
-            }
-            
-            
-        }
-        else if(x->parent==x->parent->r_child)
-        {
-             if (x->parent->l_child->height>=x->parent->height+1)
-            {
-                return;
-            }
-            else
-            {
-                x->height+=1;
-                x=x->parent;
-                _update_height(x);
-            }
+            return;
         }
 
+        if (x->parent==NULL)
+        {
+            return; //root case
+        }
+        
+        // if (x->height+1<=max_height (x->parent->l_child,x->parent->r_child))
+        if (x->height+1<=x->parent->height)
+        {
+            return;
+        }
         else
-            {return;}
+        {
+            x=x->parent;
+            x->height+=1;
+            _update_height(x);
+        }
+        //extra cautious not necessary x=x->parent is also fine
+        // if(x->parent==x->parent->l_child)
+        // {
+           
+        //     if (x->parent->r_child->height>=x->parent->height+1)
+        //     {
+        //         return;
+        //     }
+        //     else
+        //     {
+                
+
+        //     }
+            
+            
+        // }
+        // else if(x->parent==x->parent->r_child)
+        // {
+        //      if (x->parent->l_child->height>=x->parent->height+1)
+        //     {
+        //         return;
+        //     }
+        //     else
+        //     {
+        //         x->height+=1;
+        //         x=x->parent;
+        //         _update_height(x);
+        //     }
+        // }
+
+        // else
+        //     {return;}
+    }
+
+    void anticlock_turn(node* y)
+    {
+      
+        if (y->parent==root)
+        {
+              
+            node* temp =new node;
+            temp=root;
+            root=y;
+            root->l_child=temp;
+            // root->l_child->parent=root;
+            root->l_child->r_child=NULL;
+            // root->parent=NULL;
+            cout<<"fn called ujp"<<endl;
+        }
+        else
+        {
+            node* temp=y->parent;
+            y->parent=temp->parent;
+            y->l_child=temp;
+            temp->r_child=NULL;
+            temp->parent=y;
+
+        }
+    }
+    void elbow_turn_ac(node* y)
+    {
+        ;
+    }
+    void elbow_turn_c(node* y)
+    {
+        ;
+    }
+    void clock_turn(node*y)
+    {
+        ;
+    }
+    void manage_height(node *x)
+    {
+        cout<<"manage_height called"<<endl;
+        node* y=x;
+        node* z=x->parent;
+        while(z!=NULL)
+        {
+            if (z->balancefactor()==2 and y->balancefactor()==1)
+            {
+                cout<<"anticlock_turn "<<z->key<<" "<<y->key<<" root or not "<<(y->parent==root)<<endl;
+                anticlock_turn(y);
+            }
+            else if  (z->balancefactor()==2 and y->balancefactor()==-1)
+            {
+                elbow_turn_ac(y);
+            }
+            else if  (z->balancefactor()==-2 and y->balancefactor()==1)
+            {
+                clock_turn(y);
+            }
+            else if  (z->balancefactor()==-2 and y->balancefactor()==1)
+            {
+                elbow_turn_c(y);
+            }
+            else
+            {
+                ;
+            }
+            z=z->parent;
+            y=y->parent;
+        }
     }
     int high(node* a)
     {
@@ -101,9 +201,10 @@ public:
             root->l_child=NULL;
             root->r_child=NULL;
             root->parent=NULL;
-            root->height=0;
+            root->height=1;
             // cout<< "here"<<endl;
             _update_height(root);
+            manage_height(root);
             return root;
 
         }
@@ -133,7 +234,7 @@ public:
         x->key=k;
         x->l_child=NULL;
         x->r_child=NULL;
-        x->height=0;
+        x->height=1;
         
 
         if (k<y->key)
@@ -143,6 +244,7 @@ public:
         else y->r_child=x;
 
         _update_height(x);
+        manage_height(x);
         return x;
         }
 
@@ -176,22 +278,24 @@ public:
 int main()
 {
     BST a;
-    int arr[7];
+    int arr[3];
     cout<<endl;
     srand(time(0));
-    for(int i=0; i<7;i++)
+    for(int i=0; i<3;i++)
     {   
         // int temp=rand()%100;
+        // a.insert(temp);
+        // arr[i]=temp;
 
         cin>>arr[i];
         a.insert(arr[i]);
     }
     
-    for(int i=0; i<7;i++)
+    for(int i=0; i<3;i++)
     {   
         cout<<arr[i]<<" ";
     }
-    cout<<endl;
+    cout<<a.root->key<<" "<<a.root->l_child->key <<" xz"<<a.root->r_child->key<<endl;
     a.inorder(a.root);
     
    
