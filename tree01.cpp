@@ -121,19 +121,24 @@ public:
             node* temp =new node;
             temp=root;
             root=y;
+            root->parent=NULL;
             root->l_child=temp;
             // root->l_child->parent=root;
             root->l_child->r_child=NULL;
-            // root->parent=NULL;
+            temp->parent=root;
+            temp->r_child=NULL;
+            temp->height-=2;
             cout<<"fn called ujp"<<endl;
         }
         else
         {
-            node* temp=y->parent;
+            node* temp=new node;
+            temp=y->parent;
             y->parent=temp->parent;
             y->l_child=temp;
             temp->r_child=NULL;
             temp->parent=y;
+            temp->height-=2;
 
         }
     }
@@ -152,43 +157,61 @@ public:
     void manage_height(node *x)
     {
         cout<<"manage_height called"<<endl;
+        if (x->parent!=NULL)
+        {
+            cout<<"x->key : "<<x->key<<endl;
+            cout<<"x->parent->key : "<<x->parent->key<<endl;
+        }
         node* y=x;
         node* z=x->parent;
+
+        if (y)
+        {
+        cout<<"y->balancefactor "<<y->balancefactor()<<endl;
+        }
+        if (z)
+        {
+            cout<<"z->balancefactor "<<z->balancefactor()<<endl;
+        }
         while(z!=NULL)
         {
             if (z->balancefactor()==2 and y->balancefactor()==1)
             {
                 cout<<"anticlock_turn "<<z->key<<" "<<y->key<<" root or not "<<(y->parent==root)<<endl;
                 anticlock_turn(y);
+                break;
             }
             else if  (z->balancefactor()==2 and y->balancefactor()==-1)
             {
                 elbow_turn_ac(y);
+                break;
             }
             else if  (z->balancefactor()==-2 and y->balancefactor()==1)
             {
                 clock_turn(y);
+                break;
             }
             else if  (z->balancefactor()==-2 and y->balancefactor()==1)
             {
                 elbow_turn_c(y);
+                break;
             }
             else
             {
-                ;
+                if(y && z){
+               
+                cout<<"z: "<<z->key<<endl;
+                
+                cout<<"y: "<<y->key<<endl;
             }
             z=z->parent;
-            y=y->parent;
+             y=y->parent;
+             
+            }
+            
         }
     }
-    int high(node* a)
-    {
-        if(a==NULL)
-        {
-            return 0;
-        }
-        else return a->height;
-    }
+
 
     node* insert(int k)
     {
@@ -196,6 +219,7 @@ public:
         if (root==NULL)
             // cannot make assignments to null pointer 
         {
+            cout<<"root assigned"<<endl;
             root=y;
             root->key=k;
             root->l_child=NULL;
@@ -263,6 +287,20 @@ public:
         else return;
 
     }
+
+     void preorder(node* a)
+    {   
+        node* x=a;
+        if(x!=NULL)
+        {
+            cout<<" key: "<<x->key<<" height "<<x->height<<" "<<" balancefactor "<<x->balancefactor()<<" ";
+            inorder(x->l_child);
+            
+            inorder(x->r_child);
+        }
+        else return;
+
+    }
 };
 
 
@@ -278,25 +316,25 @@ public:
 int main()
 {
     BST a;
-    int arr[3];
+    int arr[5]={78,89,114,119,132};
     cout<<endl;
     srand(time(0));
-    for(int i=0; i<3;i++)
+    for(int i=0; i<5;i++)
     {   
         // int temp=rand()%100;
         // a.insert(temp);
         // arr[i]=temp;
 
-        cin>>arr[i];
+        // cin>>arr[i];
         a.insert(arr[i]);
     }
     
-    for(int i=0; i<3;i++)
+    for(int i=0; i<5;i++)
     {   
         cout<<arr[i]<<" ";
     }
     cout<<a.root->key<<" "<<a.root->l_child->key <<" xz"<<a.root->r_child->key<<endl;
-    a.inorder(a.root);
+    a.preorder(a.root);
     
    
     return 0;
