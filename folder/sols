@@ -1,0 +1,16 @@
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        l=len(s)
+        d=defaultdict(lambda:[])
+        for i,j in enumerate(s):
+            if not d[j]:
+                d[j].append(i)
+            elif len(d[j])==1:
+                d[j].append(i)
+            else:
+                d[j][1]=i
+        arr=list(d.values())
+        print(arr)
+
+a=Solution()
+a.partitionLabels("ababcbacadefegdehijhklij")

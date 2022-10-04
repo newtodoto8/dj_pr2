@@ -1,0 +1,10 @@
+Read the documentation. This is by far the most underrated thing that could blow up your knowledge about a language. I can't count how many people ask me about problems that are well documented.
+Learn the most popular libraries, why they were made, how they work. (I.e: Flask, Django, requests)
+Try writing concurrent code, learn about threads, process, how they work, their weakness in Python.
+Learn about sockets, network libraries, async features.
+Learn a little about scipy and numpy.
+Learn about interpreters, how they work, why there are so many different implementations of Python. (Python is written in English not C as many state, the most common implementation is a C based interpreter). This is a very important concept.
+Learn about Python ecosystem. Please do not be a hipster writing code in the notepad, at least not yet. Learn to use PyCharm. Learn about PEP8. Learn about PIP, setuptools, virtualenv.
+Learn about Python production brothers. Docker containers. UWSGI. Gunicorn. NGINX. All the stuff.
+Learn tips and tricks from Google. Lambda functions. Decorators, descriptors, iterators, generators, metaclasses (Thanks Adrian Carpenter!). One liners like: "python -m http.server".
+Write a lot of buggy code.
