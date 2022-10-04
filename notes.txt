@@ -1,0 +1,5 @@
+A *a;
+a->show();
+just declares a pointer of type A*. Pointer alone is nothing but a variable that holds an address of some memory in it, i.e. it just points somewhere, nothing else. Pointer of type A* means that it points to memory, where an instance of type A is expected to be found.
+
+a->show(); then just relies on this "expectation", but in fact it just uses uninitialized pointer, which results in undefined behavior.

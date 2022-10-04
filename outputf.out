@@ -1,0 +1,50 @@
+
+root assigned
+manage_height called
+y->balancefactor 0
+manage_height called
+x->height 1
+x->key : 15
+x->parent->key : 10
+y->balancefactor 0
+z->balancefactor 1
+z: 10
+y: 15
+manage_height called
+x->height 1
+x->key : 11
+x->parent->key : 15
+y->balancefactor 0
+z->balancefactor -1
+z: 15
+y: 11
+elbow_turn_ac
+y->key: 15
+fn called to change structure
+manage_height called
+x->height 1
+x->key : 17
+x->parent->key : 15
+y->balancefactor 0
+z->balancefactor 1
+z: 15
+y: 17
+z: 11
+y: 15
+manage_height called
+x->height 1
+x->key : 16
+x->parent->key : 17
+y->balancefactor 0
+z->balancefactor -1
+z: 17
+y: 16
+elbow_turn_ac
+y->key: 17
+ y->parent 15
+ y->r_child 17 y 16 root: 11 root_lchild: 10 rootri8 15
+10 15 11 17 16 
+ key: 11 height 2  balancefactor 0  key: 10 height 1  balancefactor 0  key: 16 height 1  balancefactor 1  key: 15 height 1  balancefactor 0  key: 17 height 2  balancefactor 0 
+root->r_child 16
+predeccessor 10
+ key: 10 height 1  balancefactor 0  key: 11 height 2  balancefactor 0  key: 15 height 1  balancefactor 0  key: 16 height 1  balancefactor 1  key: 17 height 2  balancefactor 0 
